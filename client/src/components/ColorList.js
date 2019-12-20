@@ -19,13 +19,14 @@ const ColorList = ({ colors, updateColors }) => {
   };
 
   const saveEdit = e => {    
-    e.preventDefault();
+    
     axiosWithAuth()      
       .put(`/colors/${colorToEdit.id}`, colorToEdit)
       .then(res => {
-        console.log('edit complete')       
+        console.log('done') 
+        updateColors(res.data)
       })
-      .catch(error => console.log('Editing error', error));    
+      .catch(err => console.log('Editing error', err));    
   };
 
   const deleteColor = color => {

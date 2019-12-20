@@ -43,7 +43,7 @@ const Login = (props) => {
           />
 
         <input
-          type="text"
+          type="password"
           name="password"
           placeholder="Password"
           value={data.password}
