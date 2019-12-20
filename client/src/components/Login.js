@@ -25,7 +25,7 @@ const Login = (props) => {
         localStorage.setItem('token', response.data.payload);
         props.history.push('/bubble-page')        
       })
-      .catch(err => ('Login Error', err));    
+      .catch(err => console.log('Login Error', err));    
   };
 
   return (
