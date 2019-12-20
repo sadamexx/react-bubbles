@@ -18,19 +18,14 @@ const ColorList = ({ colors, updateColors }) => {
     setColorToEdit(color);
   };
 
-  const saveEdit = e => {
-    axiosWithAuth()
+  const saveEdit = e => {    
+    e.preventDefault();
+    axiosWithAuth()      
       .put(`/colors/${colorToEdit.id}`, colorToEdit)
       .then(res => {
-        axiosWithAuth()
-          .get('http://localhost:5000/api/colors')
-          .then(res => {
-            updateColors(res.data);
-          })
-          .catch(error => console.log('update get error', error));
+        console.log('edit complete')       
       })
-      .catch(error => console.log('update put error', error));
-    setEditing(false);
+      .catch(error => console.log('Editing error', error));    
   };
 
   const deleteColor = color => {
