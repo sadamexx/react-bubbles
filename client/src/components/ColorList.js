@@ -10,6 +10,11 @@ const ColorList = ({ colors, updateColors }) => {
   console.log(colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
+  const [colorToAdd, setColorToAdd] = useState({
+    color: "",
+    code: { hex: "" },
+    id: Date.now()
+  })
 
   const editColor = color => {
     setEditing(true);
@@ -35,6 +40,17 @@ const ColorList = ({ colors, updateColors }) => {
     })
     .catch(err => console.log('Deleting error', err))
   };
+
+  const addColor = e => {
+    e.preventDefault()
+    axiosWithAuth()
+    .post('/colors', colorToAdd)
+    .then(res => {
+      console.log(res)
+      updateColors(res.data)
+    })
+    .catch(err => console.log('Adding color failed', err))
+  }
 
   return (
     <div className="colors-wrap">
@@ -90,6 +106,31 @@ const ColorList = ({ colors, updateColors }) => {
         </form>
       )}
       <div className="spacer" />
+      <h1>Add Color</h1>
+        <form onSubmit={addColor}>
+          <label>Color Name:</label>
+          <input 
+          type="text"
+          name="name"
+          value={colorToAdd.color}
+          onChange={e =>
+                setColorToAdd({ ...colorToAdd, color: e.target.value })
+              }
+          />
+
+          <label>Hex Number:</label>
+          <input 
+          type="text"
+          name="code"
+          value={colorToAdd.code.hex}
+          onChange={e =>
+                setColorToAdd({ ...colorToAdd, code: { hex: e.target.value }
+                })
+              }   
+          />
+
+          <button>Add Color</button>
+        </form>
       {/* stretch - build another form here to add a color */}
     </div>
   );
